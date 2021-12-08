@@ -80,7 +80,7 @@ namespace MurbongCrosshair
         }
         private void Widget1SettingsWindow_Closed(object sender, Windows.UI.Core.CoreWindowEventArgs e)
         {
-            widget1 = null;
+            widget1Settings = null;
             Window.Current.Closed -= Widget1SettingsWindow_Closed;
         }
 

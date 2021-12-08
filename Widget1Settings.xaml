@@ -6,9 +6,114 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Width="500"
+    Height="600"
+    Loaded="Page_Loaded"
+    >
 
     <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+            <StackPanel Padding="10" Orientation="Vertical">
+                <Grid Padding="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="300" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Alpha : " />
+                    <Slider
+                        x:Name="Alpha"
+                        Grid.Column="1" Minimum="0" Maximum="255" ValueChanged="Alpha_ValueChanged"/>
+                </Grid>
+                <Grid Padding="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="300" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Thickness : " />
+                    <Slider
+                        x:Name="Thickness"
+                        Grid.Column="1" Minimum="0" Maximum="100" ValueChanged="Thickness_ValueChanged"/>
+                </Grid>
+                <Grid Padding="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="300" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Size : " />
+                    <Slider
+                        x:Name="Size"
+                        Grid.Column="1" Minimum="0" Maximum="100" ValueChanged="Size_ValueChanged"/>
+                </Grid>
+                <Grid Padding="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="300" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Gap : " />
+                    <Slider
+                        x:Name="Gap"
+                        Grid.Column="1" Minimum="-100" Maximum="100" ValueChanged="Gap_ValueChanged"/>
+                </Grid>
+                <Grid Padding="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Outline : " />
+                    <Slider
+                        x:Name="Outline"
+                        Grid.Column="1" Minimum="0" Maximum="100" Value="0" ValueChanged="Outline_ValueChanged" IsEnabled="{Binding ElementName= OutlineCheck,Path=IsChecked,TargetNullValue=false}"/>
+                    <CheckBox x:Name="OutlineCheck" Grid.Column="2" Content="Enabled" HorizontalAlignment="Right" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch"/>
+                </Grid>
 
+                <Grid Padding="2" Height="100">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="300" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Color : " />
+                    <Slider
+                        x:Name="Color_Red"
+                        Grid.Row="0" Grid.Column="1" Minimum="0" Maximum="255" Foreground="Red" ValueChanged="Color_ValueChanged"/>
+                    <Slider
+                        x:Name="Color_Green"
+                        Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="255" Foreground="Green" ValueChanged="Color_ValueChanged"/>
+                    <Slider
+                        x:Name="Color_Blue"
+                        Grid.Row="2" Grid.Column="1" Minimum="0" Maximum="255" Foreground="Blue" ValueChanged="Color_ValueChanged"/>
+                </Grid>
+                <Grid x:Name="ColorPreview" Width="100" Height="100" Background="White">
+                    
+                </Grid>
+                <CheckBox x:Name="Dot_Box"  Grid.Column="2" Content="Dot" HorizontalAlignment="Left" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
+                <Button Content="Center Screen" Click="CenterScreen_Click"></Button>
+            </StackPanel>
+
+        </ScrollViewer>
     </Grid>
 </Page>
