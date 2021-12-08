@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Gaming.XboxGameBar;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace MurbongCrosshair
     /// </summary>
     sealed partial class App : Application
     {
+        private XboxGameBarWidget widget1 = null;
+        private XboxGameBarWidget widget1Settings = null;
         /// <summary>
         /// Singleton 애플리케이션 개체를 초기화합니다. 이것은 실행되는 작성 코드의 첫 번째
         /// 줄이며 따라서 main() 또는 WinMain()과 논리적으로 동일합니다.
@@ -30,6 +33,55 @@ namespace MurbongCrosshair
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+        }
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            XboxGameBarWidgetActivatedEventArgs widgetArgs = null;
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                var protocolArgs = args as IProtocolActivatedEventArgs;
+                string scheme = protocolArgs.Uri.Scheme;
+                if (scheme.Equals("ms-gamebarwidget"))
+                {
+                    widgetArgs = args as XboxGameBarWidgetActivatedEventArgs;
+                }
+            }
+            if (widgetArgs != null)
+            {
+                if (widgetArgs.IsLaunchActivation)
+                {
+                    var rootFrame = new Frame();
+                    rootFrame.NavigationFailed += OnNavigationFailed;
+                    Window.Current.Content = rootFrame;
+
+                    if (widgetArgs.AppExtensionId == "Widget1")
+                    {
+                        widget1 = new XboxGameBarWidget(widgetArgs, Window.Current.CoreWindow, rootFrame);
+                        rootFrame.Navigate(typeof(Widget1), widget1);
+
+                        Window.Current.Closed += Widget1Window_Closed;
+                    }
+                    else if (widgetArgs.AppExtensionId == "Widget1Settings")
+                    {
+                        widget1Settings = new XboxGameBarWidget( widgetArgs,Window.Current.CoreWindow, rootFrame);
+                        rootFrame.Navigate(typeof(Widget1Settings));
+
+                        Window.Current.Closed += Widget1SettingsWindow_Closed;
+                    }
+                    Window.Current.Activate();
+                }
+            }
+        }
+        private void Widget1Window_Closed(object sender, Windows.UI.Core.CoreWindowEventArgs e)
+        {
+            widget1 = null;
+            Window.Current.Closed -= Widget1Window_Closed;
+        }
+        private void Widget1SettingsWindow_Closed(object sender, Windows.UI.Core.CoreWindowEventArgs e)
+        {
+            widget1 = null;
+            Window.Current.Closed -= Widget1SettingsWindow_Closed;
         }
 
         /// <summary>
@@ -94,6 +146,9 @@ namespace MurbongCrosshair
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: 애플리케이션 상태를 저장하고 백그라운드 작업을 모두 중지합니다.
+            widget1 = null;
+            widget1Settings = null;
+
             deferral.Complete();
         }
     }

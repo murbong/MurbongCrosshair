@@ -4,6 +4,7 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
   IgnorableNamespaces="uap mp">
 
   <Identity
@@ -40,6 +41,59 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+		<Extensions>
+			<uap3:Extension Category="windows.appExtension">
+				<uap3:AppExtension Name="microsoft.gameBarUIExtension"
+								   Id="Widget1"
+								   DisplayName="MurbongCrosshair"
+								   Description="MurbongCrosshair  With GameBar"
+								   PublicFolder="GameBar">
+					<uap3:Properties>
+						<GameBarWidget Type="Standard">
+							<HomeMenuVisible>true</HomeMenuVisible>
+							<PinningSupported>true</PinningSupported>
+							<SettingsSupported AppExtensionId="Widget1Settings" />
+							<ActivateAfterInstall>false</ActivateAfterInstall>
+							<Window>
+								<AllowForegroundTransparency>true</AllowForegroundTransparency>
+								<Size>
+									<Height>130</Height>
+									<Width>410</Width>
+								</Size>
+								<ResizeSupported>
+									<Horizontal>false</Horizontal>
+									<Vertical>false</Vertical>
+								</ResizeSupported>
+							</Window>
+						</GameBarWidget>
+					</uap3:Properties>
+				</uap3:AppExtension>
+			</uap3:Extension>
+
+			<uap3:Extension Category="windows.appExtension">
+				<uap3:AppExtension Name="microsoft.gameBarUIExtension"
+								   Id="Widget1Settings"
+								   DisplayName="MurbongCrosshair Settings"
+								   Description="MurbongCrosshair Settings"
+								   PublicFolder="Widget1">
+					<uap3:Properties>
+						<GameBarWidget Type="Settings">
+							<Window>
+								<Size>
+									<Height>300</Height>
+									<Width>300</Width>
+								</Size>
+								<ResizeSupported>
+									<Horizontal>false</Horizontal>
+									<Vertical>false</Vertical>
+								</ResizeSupported>
+							</Window>
+						</GameBarWidget>
+					</uap3:Properties>
+				</uap3:AppExtension>
+			</uap3:Extension>
+			
+		</Extensions>
     </Application>
   </Applications>
 
