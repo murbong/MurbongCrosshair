@@ -95,8 +95,6 @@ namespace MurbongCrosshair
             if (Widget1.crosshair != null)
             {
                 var color = Widget1.crosshair.Colors;
-
-
                 Outline.Value = Widget1.crosshair.Outline;
                 Gap.Value = Widget1.crosshair.Gap;
                 Dot_Box.IsChecked = Widget1.crosshair.EnableDot;
@@ -106,8 +104,20 @@ namespace MurbongCrosshair
                 Color_Red.Value = r = color.R;
                 Color_Green.Value = g = color.G;
                 Color_Blue.Value = b = color.B;
-
             }
+        }
+
+        private void OutlineCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("hello");
+            var checkbox = sender as CheckBox;
+            if (checkbox.IsChecked == false)
+            {
+                Outline.Value = 0;
+                Widget1.crosshair.Outline = 0;
+            }
+            Widget1.SettingEvent();
+
         }
 
         private void Outline_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)

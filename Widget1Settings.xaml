@@ -31,15 +31,16 @@
                 <Grid Padding="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="104.5" />
+                        <ColumnDefinition Width="195.5"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock
                         Grid.Column="0"
                         VerticalAlignment="Center"
-                        Text="Thickness : " />
+                        Text="Thickness : " Grid.ColumnSpan="2" Margin="2,0,102,0" />
                     <Slider
                         x:Name="Thickness"
-                        Grid.Column="1" Minimum="0" Maximum="100" ValueChanged="Thickness_ValueChanged"/>
+                        Grid.Column="1" Minimum="0" Maximum="100" ValueChanged="Thickness_ValueChanged" Grid.ColumnSpan="2" Margin="2,2,-2,2"/>
                 </Grid>
                 <Grid Padding="2">
                     <Grid.ColumnDefinitions>
@@ -80,13 +81,14 @@
                     <Slider
                         x:Name="Outline"
                         Grid.Column="1" Minimum="0" Maximum="100" Value="0" ValueChanged="Outline_ValueChanged" IsEnabled="{Binding ElementName= OutlineCheck,Path=IsChecked,TargetNullValue=false}"/>
-                    <CheckBox x:Name="OutlineCheck" Grid.Column="2" Content="Enabled" HorizontalAlignment="Right" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch"/>
+                    <CheckBox x:Name="OutlineCheck" Grid.Column="2" Content="Enabled" HorizontalAlignment="Right" Unchecked="OutlineCheck_Unchecked" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch"/>
                 </Grid>
 
                 <Grid Padding="2" Height="100">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="34" />
+                        <ColumnDefinition Width="266"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -95,20 +97,20 @@
                     </Grid.RowDefinitions>
                     <TextBlock
                         Grid.Column="0"
-                        VerticalAlignment="Center"
-                        Text="Color : " />
+                        VerticalAlignment="Top"
+                        Text="Color : " Grid.ColumnSpan="2" Margin="2,9,32,0" />
                     <Slider
                         x:Name="Color_Red"
-                        Grid.Row="0" Grid.Column="1" Minimum="0" Maximum="255" Foreground="Red" ValueChanged="Color_ValueChanged"/>
+                        Grid.Row="0" Grid.Column="1" Minimum="0" Maximum="255" Foreground="Red" ValueChanged="Color_ValueChanged" Grid.ColumnSpan="2" Margin="2,2,-2,30" Grid.RowSpan="2"/>
                     <Slider
                         x:Name="Color_Green"
-                        Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="255" Foreground="Green" ValueChanged="Color_ValueChanged"/>
+                        Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="255" Foreground="Green" ValueChanged="Color_ValueChanged" Grid.ColumnSpan="2" Margin="2,2,-2,30" Grid.RowSpan="2"/>
                     <Slider
                         x:Name="Color_Blue"
-                        Grid.Row="2" Grid.Column="1" Minimum="0" Maximum="255" Foreground="Blue" ValueChanged="Color_ValueChanged"/>
+                        Grid.Row="2" Grid.Column="1" Minimum="0" Maximum="255" Foreground="Blue" ValueChanged="Color_ValueChanged" Grid.ColumnSpan="2" Margin="2,2,-2,-2"/>
                 </Grid>
                 <Grid x:Name="ColorPreview" Width="100" Height="100" Background="White">
-                    
+
                 </Grid>
                 <CheckBox x:Name="Dot_Box"  Grid.Column="2" Content="Dot" HorizontalAlignment="Left" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
                 <Button Content="Center Screen" Click="CenterScreen_Click"></Button>

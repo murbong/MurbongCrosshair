@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 
 namespace MurbongCrosshair
 {
-    [XmlRoot]
     public class Crosshair
     {
         public Color Color { get; set; }
@@ -21,7 +20,6 @@ namespace MurbongCrosshair
         public int Outline { get; set; }
         public bool EnableOutline { get => Outline > 0; }
         public bool EnableDot { get; set; }
-
         public void ImportSetting(string json)
         {
             if (json != null)
@@ -37,7 +35,6 @@ namespace MurbongCrosshair
             }
 
         }
-
         public string ExportSetting()
         {
             return JsonConvert.SerializeObject(this);
