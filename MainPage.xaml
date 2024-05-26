@@ -11,6 +11,6 @@
      Height="100">
 
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="Murbong Crosshair" Padding="0,0,0,5"/>
+        <TextBlock Text="Murbong Crosshair 1.1 Updated." Padding="0,0,0,5"/>
     </StackPanel>
 </Page>

@@ -8,15 +8,15 @@
   IgnorableNamespaces="uap mp">
 
 	<Identity
-	  Name="2cb4859d-1275-48e2-b150-20901d27daec"
-	  Publisher="CN=wc100"
-	  Version="1.0.1.0" />
+	  Name="63350Murbong.19236D0AFA751"
+	  Publisher="CN=A3FE52EE-384E-474F-A60F-409D30A5F742"
+	  Version="1.1.0.0" />
 
-	<mp:PhoneIdentity PhoneProductId="2cb4859d-1275-48e2-b150-20901d27daec" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+	<mp:PhoneIdentity PhoneProductId="0b47bc53-34c7-4179-825f-20d01bd7a5ab" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
 	<Properties>
 		<DisplayName>MurbongCrosshair</DisplayName>
-		<PublisherDisplayName>wc100</PublisherDisplayName>
+		<PublisherDisplayName>Murbong</PublisherDisplayName>
 		<Logo>Assets\StoreLogo.png</Logo>
 	</Properties>
 
@@ -36,7 +36,7 @@
 			  DisplayName="MurbongCrosshair"
 			  Square150x150Logo="Assets\Square150x150Logo.png"
 			  Square44x44Logo="Assets\Square44x44Logo.png"
-			  Description="Csgo Crosshair Emulator"
+			  Description="CS2 Crosshair Emulator by Murbong"
 			  BackgroundColor="transparent">
 				<uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
 				<uap:SplashScreen Image="Assets\SplashScreen.png" />

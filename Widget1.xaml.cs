@@ -42,7 +42,7 @@ namespace MurbongCrosshair
             widget = e.Parameter as XboxGameBarWidget;
             widget.SettingsClicked += Widget_SettingsClicked;
             SettingEvent += SettingChange;
-            CenterScreen += () =>  widget.CenterWindowAsync() ;
+            CenterScreen += () => widget.CenterWindowAsync();
             crosshair = new Crosshair();
             crosshair.ImportSetting((string)Settings.GetSettingValue("Crosshair"));
             size = new Size(400, 400);
@@ -86,30 +86,32 @@ namespace MurbongCrosshair
 
                 if (crosshair.EnableOutline)
                 {
+                    // 
                     ds.FillRectangle(
                         x + ((crosshairWidth / 2) + crosshairGap) - outlineThickness,
-                        y - (crosshairWidth / 2) - outlineThickness, 
+                        y - (crosshairWidth / 2) - outlineThickness,
                         crosshairLength + outlineThickness * 2,
                         crosshairWidth + outlineThickness * 2, Colors.Black);
 
                     ds.FillRectangle((x - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap)) - outlineThickness,
-                        y - (crosshairWidth / 2) - outlineThickness, 
+                        y - (crosshairWidth / 2) - outlineThickness,
                         crosshairLength + outlineThickness * 2,
                         crosshairWidth + outlineThickness * 2, Colors.Black);
 
-                    ds.FillRectangle(x - (crosshairWidth / 2) - outlineThickness,
-                        y - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap) - outlineThickness,
-                        crosshairWidth + outlineThickness * 2, 
-                        crosshairLength + outlineThickness * 2, Colors.Black);
+                    if (!crosshair.EnableTShape)
+                        ds.FillRectangle(x - (crosshairWidth / 2) - outlineThickness,
+                            y - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap) - outlineThickness,
+                            crosshairWidth + outlineThickness * 2,
+                            crosshairLength + outlineThickness * 2, Colors.Black);
 
                     ds.FillRectangle(x - (crosshairWidth / 2) - outlineThickness,
                         y + ((crosshairWidth / 2) + crosshairGap) - outlineThickness,
-                        crosshairWidth  + outlineThickness * 2, 
+                        crosshairWidth + outlineThickness * 2,
                         crosshairLength + outlineThickness * 2, Colors.Black);
 
                     if (crosshair.EnableDot)
                         ds.FillRectangle(x - (crosshairWidth / 2) - outlineThickness,
-                            y - (crosshairWidth / 2) - outlineThickness, 
+                            y - (crosshairWidth / 2) - outlineThickness,
                             crosshairWidth + outlineThickness * 2,
                             crosshairWidth + outlineThickness * 2, Colors.Black);
                 }
@@ -119,11 +121,12 @@ namespace MurbongCrosshair
                     ds.FillRectangle(x - (crosshairWidth / 2), y - (crosshairWidth / 2), crosshairWidth, crosshairWidth, crosshair.Colors);
                 }
                 //draw crosshair
-                ds.FillRectangle(x + ((crosshairWidth / 2) + crosshairGap), y - (crosshairWidth / 2), crosshairLength, crosshairWidth, crosshair.Colors);
-                ds.FillRectangle((x - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap)), y - (crosshairWidth / 2), crosshairLength, crosshairWidth, crosshair.Colors);
+                ds.FillRectangle(x + ((crosshairWidth / 2) + crosshairGap), y - (crosshairWidth / 2), crosshairLength, crosshairWidth, crosshair.Colors); // Right
+                ds.FillRectangle((x - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap)), y - (crosshairWidth / 2), crosshairLength, crosshairWidth, crosshair.Colors); // Left
 
-                ds.FillRectangle(x - (crosshairWidth / 2), y - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap), crosshairWidth, crosshairLength, crosshair.Colors);
-                ds.FillRectangle(x - (crosshairWidth / 2), y + ((crosshairWidth / 2) + crosshairGap), crosshairWidth, crosshairLength, crosshair.Colors);
+                if (!crosshair.EnableTShape)
+                    ds.FillRectangle(x - (crosshairWidth / 2), y - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap), crosshairWidth, crosshairLength, crosshair.Colors); // Up
+                ds.FillRectangle(x - (crosshairWidth / 2), y + ((crosshairWidth / 2) + crosshairGap), crosshairWidth, crosshairLength, crosshair.Colors); // Down
 
 
 
