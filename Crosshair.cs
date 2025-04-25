@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 using Windows.UI;
-using System.Xml.Serialization;
-using Newtonsoft.Json;
 
 namespace MurbongCrosshair
 {
@@ -20,6 +14,8 @@ namespace MurbongCrosshair
         public int Outline { get; set; }
         public bool EnableOutline { get => Outline > 0; }
         public bool EnableDot { get; set; }
+
+        public bool DotIsCircle { get; set; }
 
         public bool EnableTShape { get; set; }
         public void ImportSetting(string json)
@@ -37,6 +33,7 @@ namespace MurbongCrosshair
                     Outline = obj.Outline;
                     EnableDot = obj.EnableDot;
                     EnableTShape = obj.EnableTShape;
+                    DotIsCircle = obj.DotIsCircle;
                 }
                 else
                 {
@@ -60,6 +57,7 @@ namespace MurbongCrosshair
             Outline = 0;
             EnableDot = false;
             EnableTShape = false;
+            DotIsCircle = false;
         }
         public string ExportSetting()
         {

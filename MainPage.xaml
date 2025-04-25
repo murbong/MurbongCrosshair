@@ -6,11 +6,26 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Width="250"
-     Height="100">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="Murbong Crosshair 1.1 Updated." Padding="0,0,0,5"/>
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+        <TextBlock Text="🎯 Murbong Crosshair 1.2 Updated"
+                   FontWeight="SemiBold"
+                   FontSize="14"
+                   Padding="0,0,0,8"
+                   TextWrapping="NoWrap"/>
+
+        <TextBlock Text="How to use:" FontWeight="Bold" FontSize="12" Margin="0,5,0,0"/>
+        <TextBlock Text="1. Press Win + G to open Game Bar" FontSize="11"/>
+        <TextBlock Text="2. Pin the Crosshair Widget" FontSize="11"/>
+        <TextBlock Text="3. Customize in settings (⚙)" FontSize="11" Margin="0,0,0,8"/>
+
+        <TextBlock Text="🖱️ If you can't click it, uncheck 'Click-through' in the top right corner!" 
+                   FontSize="11"
+                   TextWrapping="Wrap"
+                   Foreground="Gray"
+                   TextAlignment="Center"/>
+        <TextBlock Text="🪟 This widget is available on Windows 10/11 only." FontSize="10" Foreground="Gray" Margin="0,10,0,0"/>
     </StackPanel>
 </Page>

@@ -6,11 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Width="500"
+    Width="550"
     Height="600"
-    Loaded="Page_Loaded"
-    MinWidth="500"
-    MinHeight="600"
     >
 
     <Grid>
@@ -27,7 +24,7 @@
                         Text="Alpha : " />
                     <Slider
                         x:Name="Alpha"
-                        Grid.Column="1" Minimum="0" Maximum="255" ValueChanged="Alpha_ValueChanged"/>
+                        Grid.Column="1" Minimum="0" Maximum="255" ValueChanged="Slider_ValueChanged"/>
                 </Grid>
                 <Grid Padding="2">
                     <Grid.ColumnDefinitions>
@@ -41,7 +38,7 @@
                         Text="Thickness : " Grid.ColumnSpan="2" Margin="2,0,102,0" />
                     <Slider
                         x:Name="Thickness"
-                        Grid.Column="1" Minimum="0" StepFrequency="0.5" TickFrequency="25" Maximum="100" ValueChanged="Thickness_ValueChanged" Grid.ColumnSpan="2" Margin="2,2,-2,2"/>
+                        Grid.Column="1" Minimum="0" StepFrequency="0.5" TickFrequency="25" Maximum="100" ValueChanged="Slider_ValueChanged" Grid.ColumnSpan="2" Margin="2,2,-2,2"/>
                 </Grid>
                 <Grid Padding="2">
                     <Grid.ColumnDefinitions>
@@ -54,7 +51,7 @@
                         Text="Size : " />
                     <Slider
                         x:Name="Size"
-                        Grid.Column="1" Minimum="0" Maximum="100" ValueChanged="Size_ValueChanged"/>
+                        Grid.Column="1" Minimum="0" Maximum="100" ValueChanged="Slider_ValueChanged"/>
                 </Grid>
                 <Grid Padding="2">
                     <Grid.ColumnDefinitions>
@@ -67,7 +64,7 @@
                         Text="Gap : " />
                     <Slider
                         x:Name="Gap"
-                        Grid.Column="1" Minimum="-100" Maximum="100" ValueChanged="Gap_ValueChanged"/>
+                        Grid.Column="1" Minimum="-100" Maximum="100" ValueChanged="Slider_ValueChanged"/>
                 </Grid>
                 <Grid Padding="2">
                     <Grid.ColumnDefinitions>
@@ -81,7 +78,7 @@
                         Text="Outline : " />
                     <Slider
                         x:Name="Outline"
-                        Grid.Column="1" Minimum="0" Maximum="100" Value="0" ValueChanged="Outline_ValueChanged" IsEnabled="{Binding ElementName= OutlineCheck,Path=IsChecked,TargetNullValue=false}"/>
+                        Grid.Column="1" Minimum="0" Maximum="100" Value="0" ValueChanged="Slider_ValueChanged" IsEnabled="{Binding ElementName= OutlineCheck,Path=IsChecked,TargetNullValue=false}"/>
                     <CheckBox x:Name="OutlineCheck" Grid.Column="2" Content="Enabled" HorizontalAlignment="Right" Unchecked="OutlineCheck_Unchecked" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch"/>
                 </Grid>
 
@@ -113,8 +110,17 @@
                 <Grid x:Name="ColorPreview" Width="100" Height="100" Background="White">
 
                 </Grid>
-                <CheckBox x:Name="Dot_Box"  Grid.Column="2" Content="Enable Dot" HorizontalAlignment="Left" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch" Checked="DotCheckBox_Checked" Unchecked="DotCheckBox_Checked"/>
-                <CheckBox x:Name="T_Box"  Grid.Column="2" Content="Enable T Shape" HorizontalAlignment="Left" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch" Checked="T_Box_Checked" Unchecked="T_Box_Checked"/>
+                <CheckBox x:Name="Dot_Box"  Grid.Column="2" Content="Enable Dot" HorizontalAlignment="Left" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch" Checked="Checkbox_Checked" Unchecked="Checkbox_Checked"/>
+                <CheckBox x:Name="DotCircle_Box"
+                          Content="Dot is Circle"
+                          HorizontalAlignment="Left"
+                          MinWidth="20"
+                          FontSize="12"
+                          VerticalContentAlignment="Stretch"
+                          Checked="Checkbox_Checked"
+                          Unchecked="Checkbox_Checked"
+                          Margin="0,0,0,10"/>
+                <CheckBox x:Name="T_Box"  Grid.Column="2" Content="Enable T Shape" HorizontalAlignment="Left" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch" Checked="Checkbox_Checked" Unchecked="Checkbox_Checked"/>
 
                 <Button Content="Center Screen" Click="CenterScreen_Click"></Button>
             </StackPanel>

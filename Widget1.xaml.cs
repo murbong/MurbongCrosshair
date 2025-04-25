@@ -1,33 +1,22 @@
 ﻿using Microsoft.Gaming.XboxGameBar;
 using Microsoft.Graphics.Canvas;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Diagnostics;
+using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// 빈 페이지 항목 템플릿에 대한 설명은 https://go.microsoft.com/fwlink/?LinkId=234238에 나와 있습니다.
 
 namespace MurbongCrosshair
 {
-    /// <summary>
-    /// 자체적으로 사용하거나 프레임 내에서 탐색할 수 있는 빈 페이지입니다.
-    /// </summary>
     public sealed partial class Widget1 : Page
     {
-        private Size size;
-        private XboxGameBarWidget widget = null;
+        private static readonly Size WidgetSize = new Size(400, 400);
+        private XboxGameBarWidget widget;
         public static Crosshair crosshair;
         public static Action SettingEvent;
         public static Action CenterScreen;
@@ -37,105 +26,124 @@ namespace MurbongCrosshair
             this.InitializeComponent();
         }
 
+        private double GetDpiScale()
+        {
+            var display = DisplayInformation.GetForCurrentView();
+            Debug.WriteLine(display.RawPixelsPerViewPixel);
+            return display.RawPixelsPerViewPixel;
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             widget = e.Parameter as XboxGameBarWidget;
-            widget.SettingsClicked += Widget_SettingsClicked;
-            SettingEvent += SettingChange;
+            widget.SettingsClicked += async (s, args) => await OpenSettingsAsync();
+
+            SettingEvent += SaveAndRedraw;
             CenterScreen += () => widget.CenterWindowAsync();
+
             crosshair = new Crosshair();
-            crosshair.ImportSetting((string)Settings.GetSettingValue("Crosshair"));
-            size = new Size(400, 400);
-            widget.MinWindowSize = size;
-            widget.MaxWindowSize = size;
-            Task.Run(() => widget.TryResizeWindowAsync(size));
-        }
-        private async void Widget_SettingsClicked(XboxGameBarWidget sender, object args)
-        {
-            await widget.ActivateSettingsAsync();
+            crosshair.ImportSetting(Settings.Get<string>("Crosshair"));
+
+            widget.MinWindowSize = WidgetSize;
+            widget.MaxWindowSize = WidgetSize;
+
+            widget.CenterWindowAsync();
+            widget.TryResizeWindowAsync(WidgetSize);
         }
 
-        private void SettingChange()
+        private async Task OpenSettingsAsync() => await widget.ActivateSettingsAsync();
+
+        private void SaveAndRedraw()
         {
-            Settings.SetSettingValue("Crosshair", crosshair.ExportSetting());
-            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                renderOnce();
-            });
+            Settings.Set("Crosshair", crosshair.ExportSetting());
+            _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, RenderCrosshair);
         }
 
         private void canvasSwapChainPaenl_Loaded(object sender, RoutedEventArgs e)
         {
-            renderOnce();
+            RenderCrosshair();
         }
 
-        private void renderOnce()
+        private void RenderCrosshair()
         {
-            canvasSwapChainPanel.SwapChain = new CanvasSwapChain(CanvasDevice.GetSharedDevice(), (float)size.Width, (float)size.Height, 96);
-            var swapChain = canvasSwapChainPanel.SwapChain;
+            canvasSwapChainPanel.SwapChain = new CanvasSwapChain(
+                CanvasDevice.GetSharedDevice(),
+                (float)WidgetSize.Width,
+                (float)WidgetSize.Height,
+                96 * (float)GetDpiScale());
 
-            using (var ds = swapChain.CreateDrawingSession(Colors.Transparent))
+            using (var ds = canvasSwapChainPanel.SwapChain.CreateDrawingSession(Colors.Transparent))
             {
-                var x = (float)size.Width / 2;
-                var y = (float)size.Height / 2;
-                var crosshairLength = crosshair.Size * 2;
-                var crosshairWidth = crosshair.Thickness * 2;
-                var crosshairGap = crosshair.Gap + 4;
-                var outlineThickness = crosshair.Outline;
                 ds.Clear(Colors.Transparent);
+                DrawCrosshair(ds);
+                ds.Flush();
+            }
 
-                if (crosshair.EnableOutline)
-                {
-                    // 
-                    ds.FillRectangle(
-                        x + ((crosshairWidth / 2) + crosshairGap) - outlineThickness,
-                        y - (crosshairWidth / 2) - outlineThickness,
-                        crosshairLength + outlineThickness * 2,
-                        crosshairWidth + outlineThickness * 2, Colors.Black);
+            canvasSwapChainPanel.SwapChain.Present();
+        }
 
-                    ds.FillRectangle((x - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap)) - outlineThickness,
-                        y - (crosshairWidth / 2) - outlineThickness,
-                        crosshairLength + outlineThickness * 2,
-                        crosshairWidth + outlineThickness * 2, Colors.Black);
+        private void DrawCrosshair(CanvasDrawingSession ds)
+        {
+            var centerX = (float)WidgetSize.Width / 2;
+            var centerY = (float)WidgetSize.Height / 2;
 
-                    if (!crosshair.EnableTShape)
-                        ds.FillRectangle(x - (crosshairWidth / 2) - outlineThickness,
-                            y - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap) - outlineThickness,
-                            crosshairWidth + outlineThickness * 2,
-                            crosshairLength + outlineThickness * 2, Colors.Black);
+            float length = crosshair.Size * 2;
+            float width = crosshair.Thickness * 2;
+            float gap = crosshair.Gap + 4;
+            float outline = crosshair.Outline;
 
-                    ds.FillRectangle(x - (crosshairWidth / 2) - outlineThickness,
-                        y + ((crosshairWidth / 2) + crosshairGap) - outlineThickness,
-                        crosshairWidth + outlineThickness * 2,
-                        crosshairLength + outlineThickness * 2, Colors.Black);
+            if (crosshair.EnableOutline)
+                DrawOutline(ds, centerX, centerY, length, width, gap, outline);
 
-                    if (crosshair.EnableDot)
-                        ds.FillRectangle(x - (crosshairWidth / 2) - outlineThickness,
-                            y - (crosshairWidth / 2) - outlineThickness,
-                            crosshairWidth + outlineThickness * 2,
-                            crosshairWidth + outlineThickness * 2, Colors.Black);
-                }
+            if (crosshair.EnableDot)
+            {
+                if (crosshair.DotIsCircle)
+                    DrawCircle(ds, new Vector2(centerX, centerY), width / 2, crosshair.Colors);
+                else
+                    DrawRect(ds, centerX - width / 2, centerY - width / 2, width, width, crosshair.Colors);
+            }
 
-                if (crosshair.EnableDot)
-                {
-                    ds.FillRectangle(x - (crosshairWidth / 2), y - (crosshairWidth / 2), crosshairWidth, crosshairWidth, crosshair.Colors);
-                }
-                //draw crosshair
-                ds.FillRectangle(x + ((crosshairWidth / 2) + crosshairGap), y - (crosshairWidth / 2), crosshairLength, crosshairWidth, crosshair.Colors); // Right
-                ds.FillRectangle((x - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap)), y - (crosshairWidth / 2), crosshairLength, crosshairWidth, crosshair.Colors); // Left
+            DrawRect(ds, centerX + (width / 2) + gap, centerY - (width / 2), length, width, crosshair.Colors);
+            DrawRect(ds, centerX - (length + (width / 2)) - gap, centerY - (width / 2), length, width, crosshair.Colors);
+
+            if (!crosshair.EnableTShape)
+                DrawRect(ds, centerX - (width / 2), centerY - (length + (width / 2)) - gap, width, length, crosshair.Colors);
+
+            DrawRect(ds, centerX - (width / 2), centerY + (width / 2) + gap, width, length, crosshair.Colors);
+        }
+
+        private void DrawOutline(CanvasDrawingSession ds, float x, float y, float len, float thick, float gap, float outline)
+        {
+            var color = Colors.Black;
+
+            if (crosshair.Size > 0)
+            {
+                DrawRect(ds, x + ((thick / 2) + gap) - outline, y - (thick / 2) - outline, len + outline * 2, thick + outline * 2, color);
+                DrawRect(ds, x - ((len + (thick / 2)) + gap) - outline, y - (thick / 2) - outline, len + outline * 2, thick + outline * 2, color);
 
                 if (!crosshair.EnableTShape)
-                    ds.FillRectangle(x - (crosshairWidth / 2), y - ((crosshairLength + (crosshairWidth / 2)) + crosshairGap), crosshairWidth, crosshairLength, crosshair.Colors); // Up
-                ds.FillRectangle(x - (crosshairWidth / 2), y + ((crosshairWidth / 2) + crosshairGap), crosshairWidth, crosshairLength, crosshair.Colors); // Down
+                    DrawRect(ds, x - (thick / 2) - outline, y - ((len + (thick / 2)) + gap) - outline, thick + outline * 2, len + outline * 2, color);
 
-
-
-
-
-
-                ds.Flush();
-                swapChain.Present();
+                DrawRect(ds, x - (thick / 2) - outline, y + ((thick / 2) + gap) - outline, thick + outline * 2, len + outline * 2, color);
             }
+
+            if (crosshair.EnableDot)
+            {
+                if (crosshair.DotIsCircle)
+                    DrawCircle(ds, new Vector2(x, y), (thick / 2) + outline, color);
+                else
+                    DrawRect(ds, x - (thick / 2) - outline, y - (thick / 2) - outline, thick + outline * 2, thick + outline * 2, color);
+            }
+        }
+
+        private void DrawRect(CanvasDrawingSession ds, float left, float top, float width, float height, Color color)
+        {
+            ds.FillRectangle(left, top, width, height, color);
+        }
+
+        private void DrawCircle(CanvasDrawingSession ds, Vector2 center, float radius, Color color)
+        {
+            ds.FillCircle(center, radius, color);
         }
     }
 }

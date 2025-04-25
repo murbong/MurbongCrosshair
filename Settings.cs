@@ -1,25 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage;
+﻿using Windows.Storage;
 
 namespace MurbongCrosshair
 {
     public static class Settings
     {
-        private static ApplicationDataContainer getLocalSettings()
+        private static readonly ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
+
+        public static T Get<T>(string key, T defaultValue = default)
         {
-            return ApplicationData.Current.LocalSettings;
+            if (LocalSettings.Values.TryGetValue(key, out var value) && value is T typed)
+            {
+                return typed;
+            }
+            return defaultValue;
         }
-        public static object GetSettingValue(string key)
+
+        public static void Set<T>(string key, T value)
         {
-            return getLocalSettings().Values[key];
+            LocalSettings.Values[key] = value;
         }
-        public static void SetSettingValue(string key, string value)
+
+        public static bool Contains(string key)
         {
-            getLocalSettings().Values[key] = value;
+            return LocalSettings.Values.ContainsKey(key);
+        }
+
+        public static void Remove(string key)
+        {
+            LocalSettings.Values.Remove(key);
+        }
+
+        public static void Clear()
+        {
+            LocalSettings.Values.Clear();
         }
     }
 }
