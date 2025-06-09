@@ -53,7 +53,7 @@ namespace MurbongCrosshair
             Color_Red.Value = r = color.R;
             Color_Green.Value = g = color.G;
             Color_Blue.Value = b = color.B;
-
+            CircleCrosshair_Box.IsChecked = crosshair.EnableCircleCrosshair;
             ColorPreview.Background = new SolidColorBrush(Color.FromArgb(255, r, g, b));
         }
 
@@ -93,6 +93,7 @@ namespace MurbongCrosshair
                 Outline.Value = 0;
                 Widget1.crosshair.Outline = 0;
             }
+
             Widget1.SettingEvent?.Invoke();
         }
 
@@ -104,9 +105,10 @@ namespace MurbongCrosshair
                 Widget1.crosshair.EnableTShape = T_Box.IsChecked == true;
             else if (sender == DotCircle_Box)
                 Widget1.crosshair.DotIsCircle = DotCircle_Box.IsChecked == true;
+            else if (sender == CircleCrosshair_Box)
+                Widget1.crosshair.EnableCircleCrosshair = CircleCrosshair_Box.IsChecked == true;
 
             Widget1.SettingEvent?.Invoke();
         }
     }
-
 }

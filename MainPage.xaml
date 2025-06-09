@@ -8,24 +8,54 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" >
+    <ScrollViewer>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20" Spacing="10">
 
-        <TextBlock Text="🎯 Murbong Crosshair 1.2 Updated"
-                   FontWeight="SemiBold"
-                   FontSize="14"
-                   Padding="0,0,0,8"
-                   TextWrapping="NoWrap"/>
+            <!-- 헤더 -->
+            <TextBlock Text="🎯 Murbong Crosshair 1.3"
+                       FontWeight="SemiBold"
+                       FontSize="16"
+                       Padding="0,0,0,10"
+                       TextWrapping="WrapWholeWords"
+                       TextAlignment="Center"/>
 
-        <TextBlock Text="How to use:" FontWeight="Bold" FontSize="12" Margin="0,5,0,0"/>
-        <TextBlock Text="1. Press Win + G to open Game Bar" FontSize="11"/>
-        <TextBlock Text="2. Pin the Crosshair Widget" FontSize="11"/>
-        <TextBlock Text="3. Customize in settings (⚙)" FontSize="11" Margin="0,0,0,8"/>
+            <!-- 사용법 -->
+            <TextBlock Text="📘 How to use:" FontWeight="Bold" FontSize="13" Margin="0,5,0,0"/>
+            <TextBlock Text="1. Press Win + G to open Game Bar" FontSize="12"/>
+            <TextBlock Text="2. Pin the Crosshair Widget" FontSize="12"/>
+            <TextBlock Text="3. Customize in settings (⚙)" FontSize="12" Margin="0,0,0,10"/>
 
-        <TextBlock Text="🖱️ If you can't click it, uncheck 'Click-through' in the top right corner!" 
-                   FontSize="11"
-                   TextWrapping="Wrap"
-                   Foreground="Gray"
-                   TextAlignment="Center"/>
-        <TextBlock Text="🪟 This widget is available on Windows 10/11 only." FontSize="10" Foreground="Gray" Margin="0,10,0,0"/>
-    </StackPanel>
+            <TextBlock Text="🖱️ If you can't click it, uncheck 'Click-through' in the top right corner!" 
+                       FontSize="11"
+                       Foreground="Gray"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+
+            <TextBlock Text="🪟 This widget is available on Windows 10/11 only."
+                       FontSize="10"
+                       Foreground="Gray"
+                       Margin="0,10,0,20"
+                       TextAlignment="Center"/>
+
+            <!-- 업데이트 로그 -->
+            <TextBlock Text="📌 v1.3 Update Log"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       Margin="0,10,0,4"/>
+            <StackPanel>
+                <TextBlock Text="✔️ Added circular crosshair mode" FontSize="12" Margin="0,0,0,2"/>
+                <TextBlock Text="✔️ Outline support for circular crosshair" FontSize="12" Margin="0,0,0,2"/>
+            </StackPanel>
+            
+            <!-- 버그픽스 로그 -->
+            <TextBlock Text="🪲 Bug Fixes"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       Margin="0,12,0,4"/>
+            <StackPanel>
+                <TextBlock Text="• Fixed window auto-centering on launch" FontSize="12" Margin="0,0,0,2"/>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
 </Page>

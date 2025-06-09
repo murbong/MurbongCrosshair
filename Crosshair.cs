@@ -18,6 +18,8 @@ namespace MurbongCrosshair
         public bool DotIsCircle { get; set; }
 
         public bool EnableTShape { get; set; }
+        
+        public bool EnableCircleCrosshair { get; set; }  // ✅ 추가
         public void ImportSetting(string json)
         {
             try
@@ -34,6 +36,7 @@ namespace MurbongCrosshair
                     EnableDot = obj.EnableDot;
                     EnableTShape = obj.EnableTShape;
                     DotIsCircle = obj.DotIsCircle;
+                    EnableCircleCrosshair = obj.EnableCircleCrosshair;
                 }
                 else
                 {
@@ -58,6 +61,7 @@ namespace MurbongCrosshair
             EnableDot = false;
             EnableTShape = false;
             DotIsCircle = false;
+            EnableCircleCrosshair = false;
         }
         public string ExportSetting()
         {

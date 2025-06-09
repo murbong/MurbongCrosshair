@@ -121,7 +121,16 @@
                           Unchecked="Checkbox_Checked"
                           Margin="0,0,0,10"/>
                 <CheckBox x:Name="T_Box"  Grid.Column="2" Content="Enable T Shape" HorizontalAlignment="Left" MinWidth="20" FontSize="12" VerticalContentAlignment="Stretch" Checked="Checkbox_Checked" Unchecked="Checkbox_Checked"/>
-
+                <CheckBox x:Name="CircleCrosshair_Box"
+                          Content="Enable Circle Crosshair"
+                          HorizontalAlignment="Left"
+                          MinWidth="20"
+                          FontSize="12"
+                          VerticalContentAlignment="Stretch"
+                          Checked="Checkbox_Checked"
+                          Unchecked="Checkbox_Checked"
+                          Margin="0,0,0,10"/>
+                
                 <Button Content="Center Screen" Click="CenterScreen_Click"></Button>
             </StackPanel>
 

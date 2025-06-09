@@ -10,6 +10,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Graphics.Canvas.Geometry;
 
 namespace MurbongCrosshair
 {
@@ -47,7 +48,7 @@ namespace MurbongCrosshair
             widget.MinWindowSize = WidgetSize;
             widget.MaxWindowSize = WidgetSize;
 
-            widget.CenterWindowAsync();
+            // widget.CenterWindowAsync();
             widget.TryResizeWindowAsync(WidgetSize);
         }
 
@@ -92,9 +93,6 @@ namespace MurbongCrosshair
             float gap = crosshair.Gap + 4;
             float outline = crosshair.Outline;
 
-            if (crosshair.EnableOutline)
-                DrawOutline(ds, centerX, centerY, length, width, gap, outline);
-
             if (crosshair.EnableDot)
             {
                 if (crosshair.DotIsCircle)
@@ -102,6 +100,17 @@ namespace MurbongCrosshair
                 else
                     DrawRect(ds, centerX - width / 2, centerY - width / 2, width, width, crosshair.Colors);
             }
+
+            
+            if (crosshair.EnableCircleCrosshair)
+            {
+                DrawCircleCrosshair(ds, centerX, centerY);
+                return;
+            }
+
+            if (crosshair.EnableOutline)
+                DrawOutline(ds, centerX, centerY, length, width, gap, outline);
+
 
             DrawRect(ds, centerX + (width / 2) + gap, centerY - (width / 2), length, width, crosshair.Colors);
             DrawRect(ds, centerX - (length + (width / 2)) - gap, centerY - (width / 2), length, width, crosshair.Colors);
@@ -112,6 +121,22 @@ namespace MurbongCrosshair
             DrawRect(ds, centerX - (width / 2), centerY + (width / 2) + gap, width, length, crosshair.Colors);
         }
 
+        private void DrawCircleCrosshair(CanvasDrawingSession ds, float centerX, float centerY)
+        {
+            float radius = crosshair.Size;
+            float thickness = crosshair.Thickness;
+            var color = crosshair.Colors;
+
+            // ✅ 원형 외곽선(링) 그리기
+            ds.DrawCircle(new Vector2(centerX, centerY), radius, color, thickness);
+            
+            if (crosshair.EnableOutline)
+            {
+                float outlineThickness = thickness + (crosshair.Outline * 2);
+                ds.DrawCircle(new Vector2(centerX, centerY), radius, Colors.Black, outlineThickness);
+            }
+            
+        }
         private void DrawOutline(CanvasDrawingSession ds, float x, float y, float len, float thick, float gap, float outline)
         {
             var color = Colors.Black;

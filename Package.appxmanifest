@@ -5,12 +5,13 @@
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
-  IgnorableNamespaces="uap mp">
+  xmlns:uap18="http://schemas.microsoft.com/appx/manifest/uap/windows10/18"
+  IgnorableNamespaces="uap mp uap18">
 
 	<Identity
 	  Name="63350Murbong.19236D0AFA751"
 	  Publisher="CN=A3FE52EE-384E-474F-A60F-409D30A5F742"
-	  Version="1.2.0.0" />
+	  Version="1.2.1.0" />
 
 	<mp:PhoneIdentity PhoneProductId="0b47bc53-34c7-4179-825f-20d01bd7a5ab" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -21,7 +22,7 @@
 	</Properties>
 
 	<Dependencies>
-		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+		<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.22621.0" />
 	</Dependencies>
 
 	<Resources>
@@ -31,7 +32,7 @@
 	<Applications>
 		<Application Id="App"
 		  Executable="$targetnametoken$.exe"
-		  EntryPoint="MurbongCrosshair.App">
+		  EntryPoint="MurbongCrosshair.App" uap18:RuntimeBehavior="windowsApp">
 			<uap:VisualElements
 			  DisplayName="MurbongCrosshair"
 			  Square150x150Logo="Assets\Square150x150Logo.png"
