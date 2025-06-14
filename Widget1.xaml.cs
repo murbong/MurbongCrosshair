@@ -127,14 +127,15 @@ namespace MurbongCrosshair
             float thickness = crosshair.Thickness;
             var color = crosshair.Colors;
 
-            // ✅ 원형 외곽선(링) 그리기
-            ds.DrawCircle(new Vector2(centerX, centerY), radius, color, thickness);
-            
             if (crosshair.EnableOutline)
             {
                 float outlineThickness = thickness + (crosshair.Outline * 2);
                 ds.DrawCircle(new Vector2(centerX, centerY), radius, Colors.Black, outlineThickness);
             }
+            // ✅ 원형 외곽선(링) 그리기
+            ds.DrawCircle(new Vector2(centerX, centerY), radius, color, thickness);
+            
+
             
         }
         private void DrawOutline(CanvasDrawingSession ds, float x, float y, float len, float thick, float gap, float outline)
